@@ -730,7 +730,10 @@ export async function handleCommand(interaction: Interaction) {
 
     try {
       const imagePath = join(process.cwd(), "public", "slap.png");
+      console.log(`[DEBUG] Slap Image Path: ${imagePath}`);
+
       const img = await loadImage(imagePath);
+      console.log("[DEBUG] Slap Image loaded successfully.");
       const height = 170;
       const width = (img.width / img.height) * height;
 
@@ -746,7 +749,7 @@ export async function handleCommand(interaction: Interaction) {
 
       return interaction.reply({ content, files: [attachment] });
     } catch (e) {
-      console.error(e);
+      console.error("[ERROR] Failed to load slap image:", e);
       let content = `**<@${sender.id}> slapped <@${target?.id}>!**`;
       if (reason) content += `\n**Reason:** ${reason}`;
       return interaction.reply({ content, ephemeral: false });
