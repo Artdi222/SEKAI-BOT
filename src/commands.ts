@@ -4,9 +4,6 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ModalBuilder,
-  TextInputBuilder,
-  TextInputStyle,
   MessageFlags,
   TextChannel,
   AttachmentBuilder,
@@ -14,6 +11,7 @@ import {
   ChannelType,
 } from "discord.js";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
+import { join } from "node:path";
 import {
   activeRooms,
   ActiveRoom,
@@ -243,7 +241,7 @@ export async function handleCommand(interaction: Interaction) {
         return interaction.update({ embeds: [embed], components: [row] });
       }
     }
-    return; 
+    return;
   }
 
   // Slash Commands only from here
@@ -731,7 +729,8 @@ export async function handleCommand(interaction: Interaction) {
     const sender = interaction.user;
 
     try {
-      const img = await loadImage("public/slap.png");
+      const imagePath = join(process.cwd(), "public", "slap.png");
+      const img = await loadImage(imagePath);
       const height = 170;
       const width = (img.width / img.height) * height;
 
