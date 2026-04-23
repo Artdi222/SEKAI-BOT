@@ -12,6 +12,7 @@ import {
 } from "discord.js";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
 import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import {
   activeRooms,
   ActiveRoom,
@@ -730,9 +731,11 @@ export async function handleCommand(interaction: Interaction) {
 
     try {
       const imagePath = join(process.cwd(), "public", "slap.png");
+      const imageBuffer = readFileSync(imagePath);
       console.log(`[DEBUG] Slap Image Path: ${imagePath}`);
+      console.log(`[DEBUG] Image Buffer Size: ${imageBuffer.length} bytes`);
 
-      const img = await loadImage(imagePath);
+      const img = await loadImage(imageBuffer);
       console.log("[DEBUG] Slap Image loaded successfully.");
       const height = 170;
       const width = (img.width / img.height) * height;
